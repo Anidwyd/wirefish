@@ -1,2 +1,2 @@
 # wirefish
-Wireshark but better.
+Wireshark but worse.
