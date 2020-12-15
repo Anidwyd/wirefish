@@ -7,19 +7,19 @@ def frame_decoder(frame_src: str) -> int:
 
     buffer = ""
     out = ""
-    print(ethernet_builder("00cb51d0aa8cc8d3ff4498380800"))
-    print(ip_builder("45000208dc104000800605b2c0a801396813ed38"))
-    print(tcp_builder("dd0a00509e5a0edbc12c15ee50180404b7150000"))
+    print(get_ethernet_fields("00 cb 51 d0 aa 8c c8 d3 ff 44 98 38 08 00"))
+    print(get_ip_fields("45 00 02 08 dc 10 40 00 80 06 05 b2 c0 a8 01 39 68 13 ed 38"))
+    print(get_tcp_fields("dd 0a 00 50 9e 5a 0e db c1 2c 15 ee 50 18 04 04 b7 15 00 00"))
     # analyse_http("00 cb 51 d0 aa 8c c8 d3 ff 44 98 38 08 00")
 
     return 1
 
 
-def ethernet_builder(seq: str) -> str:
+def ethernet_fields_builder(seq: str) -> str:
     """
     Analyse le protocole Ethernet de la trame
     """
-    if len(seq) < 14:
+    if len(seq) < 41:
         print('Erreur: trame mal formatée')
         exit(1)
 
@@ -33,7 +33,7 @@ def ethernet_builder(seq: str) -> str:
     return 'Ethernet II\n' + get_fields(ethernet_fields, seq)
 
 
-def ip_builder(seq: str) -> str:
+def ip_fields_builder(seq: str) -> str:
     """
     Analyse le protocole IP de la trame
     """
@@ -65,7 +65,7 @@ def ip_builder(seq: str) -> str:
     return 'Internet Protocol (IP)\n' + get_fields(ip_fields, seq)
 
 
-def tcp_builder(seq: str) -> str:
+def tcp_fields_builder(seq: str) -> str:
     """
     Analyse le protocole TCP de la trame
     """
@@ -76,8 +76,8 @@ def tcp_builder(seq: str) -> str:
         'Destination Port': (16, 'hex', None, {}),
         'Sequence Number': (32, 'hex', None, {}),
         'Acknowledgment Number': (32, 'hex', None, {}),
-        'Header Length': (4, 'hex', None, {}),
-        'Flags': (12, 'hex', None, {
+        'Header Length': (8, 'hex', None, {}),          # TODO: size=4
+        'Flags': (8, 'hex', None, {                     # TODO: size=12
             'Reserved': (6, 'hex', None, {}),
             'Urgent': (1, 'hex', None, {}),
             'Acknowledgment': (1, 'hex', None, {}),
@@ -99,7 +99,7 @@ def tcp_builder(seq: str) -> str:
 
 
 
-def http_builder(seq: str) -> str:
+def http_fields_builder(seq: str) -> str:
     """
     Analyse le protocole HTTP de la trame
     """
@@ -127,28 +127,30 @@ def get_value(seq: str, cursor: int, b_size: int, v_format: str) -> (str, int):
     # TODO: gerer les champs de taille en bits impaire (ex: ToS) 
     # TODO: gerer les fils
     if b_size > 4:
-        size = b_size//4    # size of the field in the seq
+        size = (3*b_size)//8 - 1    # size of the field in the seq
         eo_field = cursor + size    # end of the field index
         val = seq[cursor:eo_field] if eo_field < len(seq) else seq[-size:]
         n_cursor = eo_field
     else:
         val = seq[cursor]
         n_cursor = cursor + 1
+    
+    if (n_cursor < len(seq)) and (seq[n_cursor] == ' '):
+        n_cursor += 1
 
     return format_val(val, v_format), n_cursor
-    # return val, n_cursor
 
 
-def format_val(val: str, v_format: str) -> str:
+def format_val(value: str, v_format: str) -> str:
     formats = {
-        'hex':  ('0x' + val),
-        # TODO: 'bin':  val,
-        'mac':  ':'.join(["".join(x) for x in zip(*[iter(val)]*2)]),
+        'hex':  ('0x' + value).replace(' ', ''), # hexadecimal
+        'bin':  value,                           # TODO: binaire
+        'mac':  value.replace(' ', ':'),         # MAC
         'ip4':  '.'.join(str(x) for x in [int(x, 16) for x in
-                [''.join(x) for x in zip(*[iter(val)]*2)]]),
+                [''.join(x) for x in zip(*[iter(value.replace(' ', ''))]*2)]]),
     }
 
-    return formats.get(v_format, val)
+    return formats.get(v_format, value)
 
 ############
 
