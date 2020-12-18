@@ -2,44 +2,43 @@ from math import ceil
 import util
 
 
-class Segment:
-    """ Classe définissant un segment.
-        Permet de décoder (traduire, lire) le segment."""
+class Datagram:
+    """ Classe définissant un datagramme."""
 
-    def __init__(self, segment, name):
+    def __init__(self, sequence, name):
         self.name = name
 
-        self.segment = segment
-        self.seg_size = len(segment)
+        self.sequence = sequence
+        self.seq_size = len(sequence)
 
         # Format du dictionnaire de champs:
         # { field_name: (field_size: int, val_format: str, get_opt: func, {sons}) }
         self.fields = dict()
 
 
-    def __decode__(self, fields=None, segment=None, indent=1, segType='hex'):
+    def __decode__(self, fields=None, sequence=None, indent=1, seqType='hex'):
 
         if not self.fields: return ''
-        if not segment: segment = self.segment
+        if not sequence: sequence = self.sequence
         if not fields: fields = self.fields
 
         res = ''
         cursor = 0
-        seg_size = len(segment)
+        seq_size = len(sequence)
 
         # Pour chaque nom de champs de le dictionnaire de champs
         for f_name in fields:
             # Recuperer les informations du champs
             (f_size, v_format, get_opt, sons) = fields[f_name]
 
-            # Recuperer la valeur du champs dans le segment
-            if segType == 'hex':
-                f_size = max(f_size//4, 1)   # Si segment d'octets
+            # Recuperer la valeur du champs dans le sequence
+            if seqType == 'hex':
+                f_size = max(f_size//4, 1)   # Si sequence d'octets
             
-            val  = (segment[cursor:cursor+f_size] if cursor+f_size < seg_size
-                    else segment[-f_size:])
+            val  = (sequence[cursor:cursor+f_size] if cursor+f_size < seq_size
+                    else sequence[-f_size:])
 
-            # Incrementer la position du curseur dans le segment
+            # Incrementer la position du curseur dans le sequence
             cursor += f_size
 
             # Mettre a jour la chaine retour
@@ -72,12 +71,12 @@ class Segment:
 
 
 
-class Ethernet(Segment):
-    """ Classe définissant un segment Ethernet.
-        Elle herite de la classe Segment. """
+class Eth(Datagram):
+    """ Classe définissant une en-tête Ethernet.
+        Elle herite de la classe Datagram. """
 
-    def __init__(self, segment):
-        super().__init__(segment, 'Ethernet')
+    def __init__(self, sequence):
+        super().__init__(sequence, 'Ethernet')
 
         def __getType__(value) -> str:
             return {
@@ -96,14 +95,16 @@ class Ethernet(Segment):
 
 
 
-class Ip(Segment):
-    """ Classe définissant un segment IP.
-        Elle herite de la classe Segment. """
+class Ip(Datagram):
+    """ Classe définissant une en-tête IP.
+        Elle herite de la classe Datagram. """
 
-    def __init__(self, segment):
+    def __init__(self, sequence, ihl):
 
-        super().__init__(segment, 'Internet Protocol')
+        super().__init__(sequence, 'Internet Protocol')
         
+        self.ihl = ihl
+
         def __getVers__(value):
             return {
                 '0': 'Reserved',
@@ -140,20 +141,21 @@ class Ip(Segment):
             'Destination IP Address': (32, 'ip4', None, {}),
         }
 
-        opt_size = (self.seg_size // 2 - 20) * 8
-        if opt_size > 0:
-            self.fields['Options'] = (opt_size, 'hex', None, {})
+        if self.ihl > 5:
+            self.fields['Options'] = ((self.ihl-5)*4, 'hex', None, {})
 
 
 
 
-class Tcp(Segment):
-    """ Classe définissant un segment TCP.
-        Elle herite de la classe Segment. """
+class Tcp(Datagram):
+    """ Classe définissant une en-tête TCP.
+        Elle herite de la classe Datagram. """
 
-    def __init__(self, segment):
+    def __init__(self, sequence, thl):
+    
+        super().__init__(sequence, 'Transmission Control Protocol')
 
-        super().__init__(segment, 'Transmission Control Protocol')
+        self.thl = thl
 
         self.fields = {
             'Source Port': (16, 'dec', None, {}),
@@ -175,15 +177,14 @@ class Tcp(Segment):
             'Urgent Pointer': (16, 'dec', None, {}),
         }
 
-        opt_size = (self.seg_size // 2 - 20) * 8
-        if opt_size > 0:
-            self.fields['Options'] = (opt_size, 'hex', None, {})
+        if self.thl > 5:
+            self.fields['Options'] = ((self.thl-5)*4, 'hex', None, {})
 
 
 
 
-class Http(Segment):
+class Http(Datagram):
     
-    def __init__(self, segment):
+    def __init__(self, sequence):
 
-        super().__init__(segment, 'Hypertext Transfer Protocol')
+        super().__init__(sequence, 'Hypertext Transfer Protocol')
