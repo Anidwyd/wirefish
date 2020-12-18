@@ -1,6 +1,7 @@
 from util import colorText
 from sequencer import Sequencer
- 
+import os
+
 def main():
     # f = open("../data/ascii/text.txt","r")
     # print("".join(f.readlines()))

@@ -1,0 +1,81 @@
+Analyse du fichier : tests/message_answer
+
+Trame 1: 534 octets (4272 bits)
+▼ Ethernet II:
+	Destination: 00:cb:51:d0:aa:8c
+	Source: c8:d3:ff:44:98:38
+	Type: 0x0800 (IPv4)
+▼ Internet Protocol (IP):
+	Version: 0x4 (IPv4)
+	Header Length: 0x5 (20 bytes)
+	Type of Service: 0x00
+	Total Length: 0x0208 (520)
+	Identifier: 0xdc10 (56336)
+	Flags: 
+		Reserved bits: 0 (Not set)
+		Don't fragment: 1 (Set)
+		More fragments: 0 (Not set)
+	Fragment Offset: 0
+	Time to Live: 0x80 (128)
+	Protocol: 0x06 (TCP)
+	Header Checksum: 0x05b2
+	Source IP Address: 192.168.1.57
+	Destination IP Address: 104.19.237.56
+▼ Transmission Control Protocol (TCP):
+	Source Port: 56586
+	Destination Port: 80
+	Sequence Number: 0x9e5a0edb
+	Acknowledgment Number: 0xc12c15ee
+	Header Length: 0x5 (20 bytes)
+	Flags: 
+		Reserved: 000000 (Not set)
+		Urgent: 0 (Not set)
+		Acknowledgment: 1 (Set)
+		Push: 1 (Set)
+		Reset: 0 (Not set)
+		Syn: 0 (Not set)
+		Fin: 0 (Not set)
+	Window: 0x0404 (1028)
+	Checksum: 0xb715
+	Urgent Pointer: 0
+▼ Hypertext Transfer Protocol (HTTP):
+
+Trame 2: 501 octets (4008 bits)
+▼ Ethernet II:
+	Destination: c8:d3:ff:44:98:38
+	Source: 00:cb:51:d0:aa:8c
+	Type: 0x0800 (IPv4)
+▼ Internet Protocol (IP):
+	Version: 0x4 (IPv4)
+	Header Length: 0x5 (20 bytes)
+	Type of Service: 0x00
+	Total Length: 0x01e7 (487)
+	Identifier: 0x2ae8 (10984)
+	Flags: 
+		Reserved bits: 0 (Not set)
+		Don't fragment: 1 (Set)
+		More fragments: 0 (Not set)
+	Fragment Offset: 0
+	Time to Live: 0x3a (58)
+	Protocol: 0x06 (TCP)
+	Header Checksum: 0xfcfb
+	Source IP Address: 104.19.237.56
+	Destination IP Address: 192.168.1.57
+▼ Transmission Control Protocol (TCP):
+	Source Port: 80
+	Destination Port: 56586
+	Sequence Number: 0xc12c15ee
+	Acknowledgment Number: 0x9e5a10bb
+	Header Length: 0x5 (20 bytes)
+	Flags: 
+		Reserved: 000000 (Not set)
+		Urgent: 0 (Not set)
+		Acknowledgment: 1 (Set)
+		Push: 1 (Set)
+		Reset: 0 (Not set)
+		Syn: 0 (Not set)
+		Fin: 0 (Not set)
+	Window: 0x0042 (66)
+	Checksum: 0xdab0
+	Urgent Pointer: 0
+▼ Hypertext Transfer Protocol (HTTP):

@@ -54,7 +54,7 @@ class Datagram:
 
 
     def getOutput(self):
-        return self.name + ':\n' + self.__decode__()
+        return '▼ ' + self.name + ':\n' + self.__decode__()
 
 
     def __isSet__(self, value) -> str:
@@ -76,7 +76,7 @@ class Eth(Datagram):
         Elle herite de la classe Datagram. """
 
     def __init__(self, sequence):
-        super().__init__(sequence, 'Ethernet')
+        super().__init__(sequence, 'Ethernet II')
 
         def __getType__(value) -> str:
             return {
@@ -101,7 +101,7 @@ class Ip(Datagram):
 
     def __init__(self, sequence, ihl):
 
-        super().__init__(sequence, 'Internet Protocol')
+        super().__init__(sequence, 'Internet Protocol (IP)')
         
         self.ihl = ihl
 
@@ -153,7 +153,7 @@ class Tcp(Datagram):
 
     def __init__(self, sequence, thl):
     
-        super().__init__(sequence, 'Transmission Control Protocol')
+        super().__init__(sequence, 'Transmission Control Protocol (TCP)')
 
         self.thl = thl
 
@@ -187,4 +187,4 @@ class Http(Datagram):
     
     def __init__(self, sequence):
 
-        super().__init__(sequence, 'Hypertext Transfer Protocol')
+        super().__init__(sequence, 'Hypertext Transfer Protocol (HTTP)')

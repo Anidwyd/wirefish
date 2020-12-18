@@ -9,13 +9,15 @@ class Sequencer:
         self.filename = filename
 
     def __sequence__(self):
+        res = ''
+
         with open(self.filename) as filehandle:
             lines = filter(str.strip, filehandle.readlines())
-
-        reader = ''
-        trames = []
+            res += 'Analyse du fichier : ' + filehandle.name + '\n' 
 
         # Découper le fichier en une liste de trames
+        trames = []
+        reader = ''
         for line in lines:
             if not line.isspace():
                 if line[:4] == '0000' and reader:
@@ -31,7 +33,8 @@ class Sequencer:
         for i in range(len(trames)):
             t = trames[i]
             tsize = len(t)
-            print('\nTrame ' + str(i+1) + ': ' + str(tsize//2) + ' octets ('+ str(tsize*4) + ' bits)')
+            res += ('\nTrame ' + str(i+1) + ': ' + str(tsize//2) +
+                    ' octets ('+ str(tsize*4) + ' bits)\n')
             
             # Indices de fin de chaque section,
             # Calcul de l'ihl et du thl
@@ -48,7 +51,11 @@ class Sequencer:
             http_seq = t[eoTcp:]
 
             # Affichage du decodage
-            print( Eth(ether_seq).getOutput() )
-            print( Ip(ip_seq, ihl).getOutput() )
-            print( Tcp(tcp_seq, thl).getOutput() )
-            print( Http(http_seq).getOutput() )
+            res += (Eth(ether_seq).getOutput() +
+                    Ip(ip_seq, ihl).getOutput() +
+                    Tcp(tcp_seq, thl).getOutput() +
+                    Http(http_seq).getOutput())
+
+        with open('res.txt', 'w') as out:
+            out.write(res)
+        print(res)
