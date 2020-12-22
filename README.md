@@ -38,3 +38,8 @@ __Commandes :__
    * Déplacements : `HAUT, BAS, GAUCHE, DROITE`
    * Racine / Dernier noeud visible : `DEBUT / FIN`
    * Haut de page / Bas de page : `PAGE HAUT / PAGE BAS`
+   
+## Auteurs
+   * Jules Dubreuil - [@Anidwyd](http://github.com/anidwyd)
+   * Jules Galliot - [@jugal](http://github.com/jugal)
+   * Harold Kasten - [@Alkebas](https://github.com/alkebas)
