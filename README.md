@@ -22,12 +22,18 @@ Par son utilisation ancestrale, Wirefish a pour optique de ne pas remplacer Wire
 Télécharcher la [Version 0.0](https://github.com/Anidwyd/wirefish/archive/v0.0.zip).
 
 ## Utilisation
-C'est vraiment pas compliqué : il suffit de placer le fichier a analyser dans le dossier `/load`, et de lancer la commande :
+Placer le fichier (format Hexdump) à analyser dans le dossier `/inputs`. Exécuter la commande :
 
 ```bash
-# Linux
+# Selon votre installation de Python
 python3 src/wirefish.py <nom_du_fichier>
-
-# Windows
 python src/wirefish.py <nom_du_fichier>
+py3 src/wirefish.py <nom_du_fichier>
+...
 ```
+
+**Commandes :**
+   * Etendre / Réduire : `+ / - / CLIC GAUCHE`
+   * Déplacements: `HAUT, BAS, GAUCHE, DROITE`
+   * Racine / Dernier noeud ouvert: `DEBUT / FIN`
+   * Haut de page / Bas de page : `PAGE HAUT / PAGE BAS`
