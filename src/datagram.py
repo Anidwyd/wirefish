@@ -36,7 +36,7 @@ class Datagram:
             (f_size, v_format, f_get_opt, f_children) = fields[f_name]
             nd_children = dict()
 
-            # Recuperer la valeur du champs dans le sequence
+            # Recuperer la valeur du champs dans la sequence
             if seqType == 'hex':
                 f_size = max(f_size//4, 1)   # Si sequence d'octets
             

@@ -49,28 +49,30 @@ class Interface:
             ('frame', 'black', 'light green'),
             ('protocol', 'black', 'dark cyan'),
         ('foot', 'white', 'black'),
-            ('version', 'white', 'black', 'bold'),
+            ('copyright', 'white', 'black', 'bold'),
             ('key', 'dark gray', 'black','underline'),
             ('quit', 'light red, bold', 'black'),
         ('error', 'dark red', 'black'),
-        ]
+    ]
 
-    footer_text = [
-        ('version', "WireFish 1.0"), "              ",
-        ('key', "HAUT"), ",", ('key', "BAS"), ",", ('key', "GAUCHE"), ",", ('key', "DROITE"), "    ",
-        ('key', "HAUT"), ",", ('key', "BAS DE PAGE"),"    ",
-        ('key', "+"), ",",
-        ('key', "-"), "     ",
-        ('key', "DEBUT"), ",",
-        ('key', "FIN"), "    ",
+    footer_members = [
+        ('copyright', "Jules Dubreuil, Jules Galliot, Harold Kasten"), " - ",
+        ('copyright', "WireFish v0.0")
+    ]
+
+    footer_commands = [
+        ('key', "HAUT"), ",", ('key', "BAS"), ",", ('key', "GAUCHE"), ",", ('key', "DROITE"), "  ",
+        ('key', "+"), ",", ('key', "-"), "  ",
+        ('key', "PAGE HAUT"), ",", ('key', "PAGE BAS"),"  ",
+        ('key', "DEBUT"), ",", ('key', "FIN"), "  ",
         ('quit', "Q"),
-        ]
+    ]
     
 
     def __init__(self, data=None):
 
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, '../other/text.txt')
+        filename = os.path.join(dirname, '../other/ascii_logo.txt')
 
         with open(filename, 'r') as f:
             self.header = urwid.Text( u"".join(f.readlines()), align='center' )
@@ -79,8 +81,10 @@ class Interface:
         self.trace_tree.offset_rows = 1
         self.res_box = urwid.LineBox(urwid.Padding(self.trace_tree, left=1, right=1))
         
-        self.footer = urwid.AttrWrap( urwid.Text( self.footer_text ), 'foot')
-
+        self.members = urwid.Padding(urwid.AttrWrap( urwid.Text(self.footer_members), 'foot'), left=1, right=1)
+        self.commands = urwid.Padding(urwid.AttrWrap( urwid.Text( self.footer_commands, align='right' ), 'foot'), left=1, right=1)
+        self.footer = urwid.Columns( [self.members, self.commands] )
+        
         # Assembler les widgets pour construire le layout
         self.layout = urwid.Frame(
             header=urwid.AttrWrap(self.header, 'head' ),

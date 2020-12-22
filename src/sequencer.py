@@ -1,43 +1,22 @@
 import os
-import re
+import sys
 
 from datagram import Eth, Ip, Tcp, Http
 
 class Sequencer:
-    def __init__(self, filename):
-        if not os.path.isfile(filename):
-            print("{} does not exist ".format(filename))
-            exit(1)
-        self.filename = filename
+    def __init__(self, trames):
+        self.trames = trames
 
     def sequence(self):
-        """ Découpe la chaine d'octets en une liste de trames.
-            Chaque trame est ensuite elle-même découpée en séquences.
+        """ Chaque trame est ensuite elle-même découpée en séquences.
             Chaque séquence représente un protocole. """
-
-        with open(self.filename) as filehandle:
-            lines = filter(str.strip, filehandle.readlines())
-
-        # Découper le fichier en une liste de trames
-        trames = []
-        reader = ''
-        for line in lines:
-            if not line.isspace():
-                if line[:4] == '0000' and reader:
-                    trames.append(reader)
-                    reader = ''
-                # Retirer l'offset et le retour a la ligne
-                reader += line.replace(' ', '')[4:]
-                reader = " ".join(reader.splitlines())
-        
-        trames.append(reader)
 
         # Construction du dictionnaire de la trace
         trace_tree = dict()
 
         # Découper chaque trames en sections (une section = un protocol)
-        for i in range(len(trames)):
-            t = trames[i]
+        for i in range(len(self.trames)):
+            t = self.trames[i]
             tsize = len(t)
 
             # Indices de fin de chaque sequence  + calcul de l'ihl et du thl
@@ -65,26 +44,3 @@ class Sequencer:
             trace_tree['Frame ' + str(i+1) + ': '] = ( str(tsize//2) + ' octets ('+ str(tsize*4) + ' bits)', frame_node)
 
         return trace_tree
-
-
-    def isValid(self):
-        # TODO: vérifier l'entrée
-        # - Chaque octet est codé par deux chiffres hexadécimaux.
-        # - Chaque octet est délimité par un espace.
-        # - Chaque ligne commence par l’offset du premier octet situé à la suite sur la même
-        # ligne. L’offset décrit la positon de cet octet dans la trace.
-        # - Chaque nouvelle trame commence avec un offset de 0 et l’offset est séparé d’un
-        # espace des octets capturés situés à la suite.
-        # - L’offset est codé sur au moins un octet donné en valeur hexadécimale (deux
-        # chiffres hexadécimaux).
-        # - Les caractères hexadécimaux peuvent être des majuscules ou minuscules.
-        # - Il n’y a pas de limite concernant la longueur ou le nombre d’octets présents sur
-        # chaque ligne.
-        # - Si des valeurs textuelles sont données en fin de ligne, elles doivent être ignorées,
-        # y compris si ces valeurs sont des chiffres hexadécimaux.
-        # - Les lignes de texte situées entre les traces ou entrelacées entre les lignes
-        # d’octets capturés doivent être ignorées.
-        # - Les lignes d’octets qui ne débutent pas un offset valide doivent être ignorées.
-        # - Toute ligne incomplète doit être identifiée et soulever une erreur indiquant la
-        # position de la ligne en erreur. 
-        pass
