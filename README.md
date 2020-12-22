@@ -39,8 +39,15 @@ __Commandes :__
    * Racine / Dernier noeud visible : `DEBUT / FIN`
    * Haut de page / Bas de page : `PAGE HAUT / PAGE BAS`
    * Quitter : `Q`
-   
+
+## Structure de l'analyseur
+Le programme commence par analyser la conformité du fichier donné en entrée. Ce fichier est ensuite découpé en une liste de trames, envoyée à un `Sequencer`. Chaque trame est elle-même découpée en séquences d'octets. Chaque séquence représente un protocole.
+Un protocole est défini par un datagramme. Ainsi, la classe `Datagram` permet de représenter un protocole à partir d'une séquence d'octet.
+Un `Datagram` possède un nom, une séquence, et un dictionnaire `fields` décrivant les champs du protocole. Pour chaque champs, il précise son nom, sa taille (en bits), une fonction optionnelle pour decrire sa valeur et un dictionnaire contenant les sous-champs associés. Cette classe possède une fonction `decode()`, qui a partir de son attribut `fields` parcourt la séquence d'octets pour construire un nouveau dictionnaire de la forme `{"nom du champs": ("valeur", children)}` qui représente le protocole sous la forme d'un arbre.
+Les classes `Eth`, `Ip`, `Tcp`, `Http` héritent de la classe `Datagram`. Chacune possède un attribut `fields` unique et des fonction optionnelles pour décrire la valeur de certains champs.
+Enfin, une classe `Interface` construit l'interface graphique.
+
 ## Auteurs
    * Jules Dubreuil - [@Anidwyd](http://github.com/anidwyd)
-   * Jules Galliot - [@jugal](http://github.com/jugal)
+   * Jules Galliot - [@jugall](http://github.com/jugall)
    * Harold Kasten - [@Alkebas](https://github.com/alkebas)
