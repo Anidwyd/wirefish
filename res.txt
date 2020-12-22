@@ -1,81 +1,168 @@
-Analyse du fichier : tests/message_answer
+Analyse du fichier : ../res.txt
 
-Trame 1: 534 octets (4272 bits)
-▼ Ethernet II:
-	Destination: 00:cb:51:d0:aa:8c
-	Source: c8:d3:ff:44:98:38
-	Type: 0x0800 (IPv4)
-▼ Internet Protocol (IP):
-	Version: 0x4 (IPv4)
-	Header Length: 0x5 (20 bytes)
-	Type of Service: 0x00
-	Total Length: 0x0208 (520)
-	Identifier: 0xdc10 (56336)
-	Flags: 
-		Reserved bits: 0 (Not set)
-		Don't fragment: 1 (Set)
-		More fragments: 0 (Not set)
-	Fragment Offset: 0
-	Time to Live: 0x80 (128)
-	Protocol: 0x06 (TCP)
-	Header Checksum: 0x05b2
-	Source IP Address: 192.168.1.57
-	Destination IP Address: 104.19.237.56
-▼ Transmission Control Protocol (TCP):
-	Source Port: 56586
-	Destination Port: 80
-	Sequence Number: 0x9e5a0edb
-	Acknowledgment Number: 0xc12c15ee
-	Header Length: 0x5 (20 bytes)
-	Flags: 
-		Reserved: 000000 (Not set)
-		Urgent: 0 (Not set)
-		Acknowledgment: 1 (Set)
-		Push: 1 (Set)
-		Reset: 0 (Not set)
-		Syn: 0 (Not set)
-		Fin: 0 (Not set)
-	Window: 0x0404 (1028)
-	Checksum: 0xb715
-	Urgent Pointer: 0
-▼ Hypertext Transfer Protocol (HTTP):
-
-Trame 2: 501 octets (4008 bits)
-▼ Ethernet II:
-	Destination: c8:d3:ff:44:98:38
-	Source: 00:cb:51:d0:aa:8c
-	Type: 0x0800 (IPv4)
-▼ Internet Protocol (IP):
-	Version: 0x4 (IPv4)
-	Header Length: 0x5 (20 bytes)
-	Type of Service: 0x00
-	Total Length: 0x01e7 (487)
-	Identifier: 0x2ae8 (10984)
-	Flags: 
-		Reserved bits: 0 (Not set)
-		Don't fragment: 1 (Set)
-		More fragments: 0 (Not set)
-	Fragment Offset: 0
-	Time to Live: 0x3a (58)
-	Protocol: 0x06 (TCP)
-	Header Checksum: 0xfcfb
-	Source IP Address: 104.19.237.56
-	Destination IP Address: 192.168.1.57
-▼ Transmission Control Protocol (TCP):
-	Source Port: 80
-	Destination Port: 56586
-	Sequence Number: 0xc12c15ee
-	Acknowledgment Number: 0x9e5a10bb
-	Header Length: 0x5 (20 bytes)
-	Flags: 
-		Reserved: 000000 (Not set)
-		Urgent: 0 (Not set)
-		Acknowledgment: 1 (Set)
-		Push: 1 (Set)
-		Reset: 0 (Not set)
-		Syn: 0 (Not set)
-		Fin: 0 (Not set)
-	Window: 0x0042 (66)
-	Checksum: 0xdab0
-	Urgent Pointer: 0
-▼ Hypertext Transfer Protocol (HTTP):
+Frame 1: 74 octets (592 bits)
+	Ethernet II: 
+		Destination: 00:50:7f:05:7d:40
+		Source: 00:10:a4:86:2d:0b
+		Type: 0x0800 (IPv4)
+	Internet Protocol (IP): 
+		Version: 0x4 (IPv4)
+		Header Length: 0x5 (20 bytes)
+		Type of Service: 0x00
+		Total Length: 0x003c (60)
+		Identifier: 0x1796 (6038)
+		Flags: 
+			Reserved bits: 0 (Not set)
+			Don't fragment: 1 (Set)
+			More fragments: 0 (Not set)
+		Fragment Offset: 0
+		Time to Live: 0x40 (64)
+		Protocol: 0x06 (TCP)
+		Header Checksum: 0x6df3
+		Source IP Address: 10.33.182.178
+		Destination IP Address: 192.55.52.40
+	Transmission Control Protocol (TCP): 
+		Source Port: 33971
+		Destination Port: 80
+		Sequence Number: 3063197879 (relative: 0)
+		Acknowledgment Number: 0 (relative: 0)
+		Header Length: 0xa (40 bytes)
+		Flags: 
+			Reserved: 000000 (Not set)
+			Urgent: 0 (Not set)
+			Acknowledgment: 0 (Not set)
+			Push: 0 (Not set)
+			Reset: 0 (Not set)
+			Syn: 1 (Set)
+			Fin: 0 (Not set)
+		Window: 0x16d0 (5840)
+		Checksum: 0xe823
+		Urgent Pointer: 0
+		Options: 0x02040
+Frame 2: 78 octets (624 bits)
+	Ethernet II: 
+		Destination: 00:10:a4:86:2d:0b
+		Source: 00:50:7f:05:7d:40
+		Type: 0x0800 (IPv4)
+	Internet Protocol (IP): 
+		Version: 0x4 (IPv4)
+		Header Length: 0x5 (20 bytes)
+		Type of Service: 0x00
+		Total Length: 0x0040 (64)
+		Identifier: 0xd206 (53766)
+		Flags: 
+			Reserved bits: 0 (Not set)
+			Don't fragment: 1 (Set)
+			More fragments: 0 (Not set)
+		Fragment Offset: 0
+		Time to Live: 0x70 (112)
+		Protocol: 0x06 (TCP)
+		Header Checksum: 0x837e
+		Source IP Address: 192.55.52.40
+		Destination IP Address: 10.33.182.178
+	Transmission Control Protocol (TCP): 
+		Source Port: 80
+		Destination Port: 33971
+		Sequence Number: 610765288 (relative: 0)
+		Acknowledgment Number: 3063197880 (relative: 1)
+		Header Length: 0xb (44 bytes)
+		Flags: 
+			Reserved: 000000 (Not set)
+			Urgent: 0 (Not set)
+			Acknowledgment: 1 (Set)
+			Push: 0 (Not set)
+			Reset: 0 (Not set)
+			Syn: 1 (Set)
+			Fin: 0 (Not set)
+		Window: 0xfaf0 (64240)
+		Checksum: 0xeb66
+		Urgent Pointer: 0
+		Options: 0x020405
+Frame 3: 66 octets (528 bits)
+	Ethernet II: 
+		Destination: 00:50:7f:05:7d:40
+		Source: 00:10:a4:86:2d:0b
+		Type: 0x0800 (IPv4)
+	Internet Protocol (IP): 
+		Version: 0x4 (IPv4)
+		Header Length: 0x5 (20 bytes)
+		Type of Service: 0x00
+		Total Length: 0x0034 (52)
+		Identifier: 0x1797 (6039)
+		Flags: 
+			Reserved bits: 0 (Not set)
+			Don't fragment: 1 (Set)
+			More fragments: 0 (Not set)
+		Fragment Offset: 0
+		Time to Live: 0x40 (64)
+		Protocol: 0x06 (TCP)
+		Header Checksum: 0x6dfa
+		Source IP Address: 10.33.182.178
+		Destination IP Address: 192.55.52.40
+	Transmission Control Protocol (TCP): 
+		Source Port: 33971
+		Destination Port: 80
+		Sequence Number: 3063197880 (relative: 1)
+		Acknowledgment Number: 610765289 (relative: 1)
+		Header Length: 0x8 (32 bytes)
+		Flags: 
+			Reserved: 000000 (Not set)
+			Urgent: 0 (Not set)
+			Acknowledgment: 1 (Set)
+			Push: 0 (Not set)
+			Reset: 0 (Not set)
+			Syn: 0 (Not set)
+			Fin: 0 (Not set)
+		Window: 0x16d0 (5840)
+		Checksum: 0x6877
+		Urgent Pointer: 0
+		Options: 0x010
+Frame 4: 551 octets (4408 bits)
+	Ethernet II: 
+		Destination: 00:50:7f:05:7d:40
+		Source: 00:10:a4:86:2d:0b
+		Type: 0x0800 (IPv4)
+	Internet Protocol (IP): 
+		Version: 0x4 (IPv4)
+		Header Length: 0x5 (20 bytes)
+		Type of Service: 0x00
+		Total Length: 0x0219 (537)
+		Identifier: 0x1798 (6040)
+		Flags: 
+			Reserved bits: 0 (Not set)
+			Don't fragment: 1 (Set)
+			More fragments: 0 (Not set)
+		Fragment Offset: 0
+		Time to Live: 0x40 (64)
+		Protocol: 0x06 (TCP)
+		Header Checksum: 0x6c14
+		Source IP Address: 10.33.182.178
+		Destination IP Address: 192.55.52.40
+	Transmission Control Protocol (TCP): 
+		Source Port: 33971
+		Destination Port: 80
+		Sequence Number: 3063197880 (relative: 1)
+		Acknowledgment Number: 610765289 (relative: 1)
+		Header Length: 0x8 (32 bytes)
+		Flags: 
+			Reserved: 000000 (Not set)
+			Urgent: 0 (Not set)
+			Acknowledgment: 1 (Set)
+			Push: 1 (Set)
+			Reset: 0 (Not set)
+			Syn: 0 (Not set)
+			Fin: 0 (Not set)
+		Window: 0x16d0 (5840)
+		Checksum: 0x60e4
+		Urgent Pointer: 0
+		Options: 0x010
+	Hypertext Transfer Protocol (HTTP): 
+		GET / HTTP/1.1
+		Host: www.xircom.com
+		User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.0.0) Gecko/20020623 Debian/1.0.0-0.woody.1
+		Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,text/css,*/*;q=0.1
+		Accept-Language: fr-FR, fr;q=0.66, en;q=0.33
+		Accept-Encoding: gzip, deflate, compress;q=0.9
+		Accept-Charset: ISO-8859-1, utf-8;q=0.66, *;q=0.66
+		Keep-Alive: 300
+		Connection: keep-alive

@@ -1,5 +1,7 @@
-from datagram import Eth, Ip, Tcp, Http
 import os
+import re
+
+from datagram import Eth, Ip, Tcp, Http
 
 class Sequencer:
     def __init__(self, filename):
@@ -8,12 +10,13 @@ class Sequencer:
             exit(1)
         self.filename = filename
 
-    def __sequence__(self):
-        res = ''
+    def sequence(self):
+        """ Découpe la chaine d'octets en une liste de trames.
+            Chaque trame est ensuite elle-même découpée en séquences.
+            Chaque séquence représente un protocole. """
 
         with open(self.filename) as filehandle:
             lines = filter(str.strip, filehandle.readlines())
-            res += 'Analyse du fichier : ' + filehandle.name + '\n' 
 
         # Découper le fichier en une liste de trames
         trames = []
@@ -29,19 +32,20 @@ class Sequencer:
         
         trames.append(reader)
 
-        # Pour chaque trame
+        # Construction du dictionnaire de la trace
+        trace_tree = dict()
+
+        # Découper chaque trames en sections (une section = un protocol)
         for i in range(len(trames)):
             t = trames[i]
             tsize = len(t)
-            res += ('\nTrame ' + str(i+1) + ': ' + str(tsize//2) +
-                    ' octets ('+ str(tsize*4) + ' bits)\n')
-            
-            # Indices de fin de chaque section,
-            # Calcul de l'ihl et du thl
+
+            # Indices de fin de chaque sequence  + calcul de l'ihl et du thl
             eoEth = 14 * 2                  # enf_of_eth = 14 (bytes) * 2
             ihl = int(t[eoEth+1], 16)
             eoIp = eoEth + ihl * 4 * 2      # end_of_ip  = (IHL * 4) * 2
             thl = int(t[eoIp+24], 16)
+            src = int(t[eoIp:eoIp+4], 16)
             eoTcp = eoIp + thl * 4 * 2      # end_of_tcp = (THL * 4) * 2
             
             # Decoupage de la trame en séquence d'octets
@@ -50,12 +54,37 @@ class Sequencer:
             tcp_seq = t[eoIp:eoTcp]
             http_seq = t[eoTcp:]
 
-            # Affichage du decodage
-            res += (Eth(ether_seq).getOutput() +
-                    Ip(ip_seq, ihl).getOutput() +
-                    Tcp(tcp_seq, thl).getOutput() +
-                    Http(http_seq).getOutput())
+            # Construction du noeud de la trame
+            frame_node = dict()
+            Eth(ether_seq).addNode(frame_node),
+            Ip(ip_seq, ihl).addNode(frame_node)
+            Tcp(tcp_seq, thl, src).addNode(frame_node)
+            Http(http_seq).addNode(frame_node)
 
-        with open('res.txt', 'w') as out:
-            out.write(res)
-        print(res)
+            # Ajout du noeud dans l'arbre de la trace
+            trace_tree['Frame ' + str(i+1) + ': '] = ( str(tsize//2) + ' octets ('+ str(tsize*4) + ' bits)', frame_node)
+
+        return trace_tree
+
+
+    def isValid(self):
+        # TODO: vérifier l'entrée
+        # - Chaque octet est codé par deux chiffres hexadécimaux.
+        # - Chaque octet est délimité par un espace.
+        # - Chaque ligne commence par l’offset du premier octet situé à la suite sur la même
+        # ligne. L’offset décrit la positon de cet octet dans la trace.
+        # - Chaque nouvelle trame commence avec un offset de 0 et l’offset est séparé d’un
+        # espace des octets capturés situés à la suite.
+        # - L’offset est codé sur au moins un octet donné en valeur hexadécimale (deux
+        # chiffres hexadécimaux).
+        # - Les caractères hexadécimaux peuvent être des majuscules ou minuscules.
+        # - Il n’y a pas de limite concernant la longueur ou le nombre d’octets présents sur
+        # chaque ligne.
+        # - Si des valeurs textuelles sont données en fin de ligne, elles doivent être ignorées,
+        # y compris si ces valeurs sont des chiffres hexadécimaux.
+        # - Les lignes de texte situées entre les traces ou entrelacées entre les lignes
+        # d’octets capturés doivent être ignorées.
+        # - Les lignes d’octets qui ne débutent pas un offset valide doivent être ignorées.
+        # - Toute ligne incomplète doit être identifiée et soulever une erreur indiquant la
+        # position de la ligne en erreur. 
+        pass
