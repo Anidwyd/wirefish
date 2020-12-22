@@ -37,14 +37,14 @@ def main():
         exit(1)
 
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, sys.argv[1])
+    filename = os.path.join(dirname, '../inputs/' + sys.argv[1])
 
     trace_dict = Sequencer(filename).sequence()
 
     with open('../res.txt', 'w') as f:
         f.write('Analyse du fichier : ' + f.name + '\n\n' + get_text_output(trace_dict))
 
-    retval = {"name": "Trames reconnues:", "children":[]}
+    retval = {"name": "Fichier analysé : " + sys.argv[1], "children":[]}
     tree = get_trace_tree(trace_dict, retval)
 
     Interface(tree).main()

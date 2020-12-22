@@ -57,7 +57,7 @@ class Interface:
 
     footer_text = [
         ('version', "WireFish 1.0"), "              ",
-        ('key', "HAUT"), ",", ('key', "BAS"), ",", ('key', "GAUCHE"), "    ",
+        ('key', "HAUT"), ",", ('key', "BAS"), ",", ('key', "GAUCHE"), ",", ('key', "DROITE"), "    ",
         ('key', "HAUT"), ",", ('key', "BAS DE PAGE"),"    ",
         ('key', "+"), ",",
         ('key', "-"), "     ",
@@ -70,7 +70,7 @@ class Interface:
     def __init__(self, data=None):
 
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, '../data/text.txt')
+        filename = os.path.join(dirname, '../other/text.txt')
 
         with open(filename, 'r') as f:
             self.header = urwid.Text( u"".join(f.readlines()), align='center' )
