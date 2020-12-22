@@ -11,10 +11,12 @@ WIRESHARK MAIS EN MOINS BIEN.
 </div>
 
 ## Aperçu du projet
-WireFish est un projet ayant pour optique de ne pas remplacer WireShark. 
+Wirefish est un projet réalisé dans le cadre de l'UE LU3IN033-Réseaux.
+Par son utilisation ancestrale, Wirefish a pour optique de ne pas remplacer Wireshark. 
 
 ## Prérequis
-Il est nécessaire d'installer ou de mettre à jour [Urwid](http://urwid.org/).
+   * [Python 3.8+](https://www.python.org/downloads/)
+   * [Urwid 2.1+](http://urwid.org/)
 
 ## Installation
 Télécharcher la [Version 0.0](https://github.com/Anidwyd/wirefish/archive/v0.0.zip).
