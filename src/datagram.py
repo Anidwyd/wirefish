@@ -259,7 +259,6 @@ class Http(Datagram):
 
         for line in head:
             # Les champs d’entête sont séparés par un espace (0x20).
-            # out += '\t' + " ".join([util.hexToStr(val) for val in line.split('20')]) + '\n'
             tmp = [util.hexToStr(val) for val in line.split('20')]
             node[tmp[0] + ' '] = (" ".join(tmp[1:]), {})
 
