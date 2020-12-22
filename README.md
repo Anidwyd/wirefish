@@ -11,7 +11,7 @@ WIRESHARK MAIS EN MOINS BIEN.
 </div>
 
 ## Aperçu du projet
-Wirefish est un _Analyseur de Protocole Réseau Offline_ réalisé dans le cadre du projet de l'UE "LU3IN033 Réseaux". Par son utilisation ancestrale, Wirefish a pour optique de ne pas remplacer Wireshark. 
+Wirefish est un _Analyseur de Protocole Réseau Offline_ réalisé dans le cadre du projet de l'UE "LU3IN033 Réseaux". Par son mode d'utilisation archaïque, Wirefish a pour objectif de ne pas remplacer Wireshark. 
 
 ## Prérequis
    * [Python 3.8+](https://www.python.org/downloads/)
