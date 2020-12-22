@@ -88,6 +88,12 @@ def main():
     # Récuperer les fichiers
     dirname = os.path.dirname(__file__)
 
+    if not os.path.exists(os.path.join(dirname, '../inputs/')):
+        os.makedirs(os.path.join(dirname, '../inputs/'))
+
+    if not os.path.exists(os.path.join(dirname, '../outputs/')):
+        os.makedirs(os.path.join(dirname, '../outputs/'))
+    
     inputname = sys.argv[1]
     inputpath = os.path.join(dirname, '../inputs/' + inputname)
 
