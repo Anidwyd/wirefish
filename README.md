@@ -18,7 +18,7 @@ Wirefish est un _Analyseur de Protocole Réseau Offline_ réalisé dans le cadre
    * [Urwid 2.1+](http://urwid.org/)
 
 ## Installation
-Télécharcher la [Version 0.0](https://github.com/Anidwyd/wirefish/archive/v0.0.zip).
+Télécharcher et décompresser l'archive : [📚 Wirefish v0.0](https://github.com/Anidwyd/wirefish/archive/master.zip).
 
 ## Utilisation
 Placer le fichier (format Hexdump) à analyser dans le dossier `/inputs`. Exécuter la commande :
