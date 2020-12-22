@@ -46,8 +46,8 @@ Le but de l'analyseur est de décripter une trace au format Hexdump. Le resultat
 
 Le programme commence par analyser la conformité du fichier donné en entrée. Ce fichier est ensuite découpé en une liste de trames, envoyée à un `Sequencer`. Chaque trame est elle-même découpée en séquences d'octets. Chaque séquence représente un protocole.
 Un protocole est défini par un datagramme. Ainsi, la classe `Datagram` permet de décrire un protocole à partir d'une séquence d'octet.
-Un `Datagram` possède un nom, une séquence, et un dictionnaire `fields` décrivant les champs du protocole. Pour chaque champ, il précise son nom, sa taille (en bits), une fonction optionnelle pour decrire sa valeur et un dictionnaire contenant les sous-champs associés. Cette classe possède une fonction `decode()`, qui a partir de son attribut `fields` parcourt la séquence d'octets pour construire un nouveau dictionnaire de la forme `{"nom du champs": ("valeur", children)}` qui représente le protocole sous la forme d'un arbre.
-Les classes `Eth`, `Ip`, `Tcp`, `Http` héritent de la classe `Datagram`. Chacune possède un attribut `fields` unique et des fonction optionnelles pour décrire la valeur de certains champs.
+Un `Datagram` possède un nom, une séquence, et un dictionnaire `fields` décrivant les champs du protocole. Pour chaque champ, il précise son nom, sa taille (en bits), une fonction optionnelle pour decrire sa valeur et un dictionnaire contenant les sous-champs associés. Cette classe possède une fonction `decode()`, qui a partir de son attribut `fields` parcourt la séquence d'octets pour construire le noeud du protocole associé.
+Les classes `Eth`, `Ip`, `Tcp`, `Http` héritent de la classe `Datagram`. Chacune possède un attribut `fields` unique et des fonctions optionnelles pour décrire la valeur de certains champs.
 Enfin, une classe `Interface` construit l'interface graphique.
 
 ## Auteurs
